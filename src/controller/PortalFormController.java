@@ -42,6 +42,7 @@ public class PortalFormController {
             btnRemove.setDisable(newValue==null);
         });
         lstContacts.getItems().addListener((ListChangeListener<? super String>) observable -> {
+            btnSend.setDisable(true);
             if (!lstContacts.getItems().isEmpty()){
                 btnSend.setDisable(false);
             }
@@ -61,7 +62,9 @@ public class PortalFormController {
     }
     
     public void btnRemoveOnAction(ActionEvent event) {
-
+        String selectedContact = lstContacts.getSelectionModel().getSelectedItem();
+        lstContacts.getItems().remove(selectedContact);
+        lstContacts.getSelectionModel().clearSelection();
     }
     
     public void btnSendOnAction(ActionEvent event) {
