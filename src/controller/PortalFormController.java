@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,8 +24,8 @@ public class PortalFormController {
     public void initialize(){
         btnAdd.setDisable(true);
         btnRemove.setDisable(true);
+        btnSend.setDisable(true);
         txtMessage.textProperty().addListener((observable, oldValue, newValue) -> {
-            btnSend.setDisable(false);
             int charCount = newValue.split("").length;
             lblCharacters.setText((500-charCount)+" characters remaining (Max. 500)");
             lblCharacters.setTextFill(Color.WHITE);
@@ -40,12 +41,27 @@ public class PortalFormController {
         lstContacts.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             btnRemove.setDisable(newValue==null);
         });
+        lstContacts.getItems().addListener((ListChangeListener<? super String>) observable -> {
+            if (!lstContacts.getItems().isEmpty()){
+                btnSend.setDisable(false);
+            }
+        });
     }
     
     public void btnAddOnAction(ActionEvent event) {
+        lstContacts.getSelectionModel().clearSelection();
+        for (String contact : lstContacts.getItems()) {
+            if (contact.equals(txtContact.getText())){
+                txtContact.selectAll();
+                return;
+            }
+        }
+        lstContacts.getItems().add(txtContact.getText());
+        txtContact.clear();
     }
     
     public void btnRemoveOnAction(ActionEvent event) {
+
     }
     
     public void btnSendOnAction(ActionEvent event) {
