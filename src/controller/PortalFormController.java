@@ -2,13 +2,15 @@ package controller;
 
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Optional;
 
 public class PortalFormController {
 
@@ -36,7 +38,7 @@ public class PortalFormController {
             }
         });
         txtContact.textProperty().addListener((observable, oldValue, newValue) -> {
-            btnAdd.setDisable(!newValue.trim().matches("\\d{3}-\\d{7}"));
+            btnAdd.setDisable(!newValue.trim().matches("\\d{10}"));
         });
         lstContacts.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             btnRemove.setDisable(newValue==null);
@@ -57,7 +59,7 @@ public class PortalFormController {
                 return;
             }
         }
-        lstContacts.getItems().add(txtContact.getText());
+        lstContacts.getItems().add(txtContact.getText().trim());
         txtContact.clear();
     }
     
@@ -67,7 +69,41 @@ public class PortalFormController {
         lstContacts.getSelectionModel().clearSelection();
     }
     
-    public void btnSendOnAction(ActionEvent event) {
+    public void btnSendOnAction(ActionEvent event) throws IOException {
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirmation");
+        confirmation.setHeaderText("Your message and contact(s) are as follows: ");
+        confirmation.setContentText(new String("Message: "+txtMessage.getText()+"\nContact(s): "+lstContacts.getItems().toString()));
+        confirmation.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        Optional<ButtonType> result = confirmation.showAndWait();
+        if (result.get()==ButtonType.OK){
+            URL url = new URL("https://api.smshub.lk/api/v2/send/single");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-type","application/json");
+            connection.setRequestProperty("","application/json");
+
+            String apiToken = "Enter API Token Here";
+
+            connection.setRequestProperty("Authorization", apiToken);
+
+            if (lstContacts.getItems().size()==1){
+                sendSMSSingleContact();
+            }
+            else if (lstContacts.getItems().size()>1){
+                sendSMSMultipleContacts();
+            }
+        }
+    }
+
+    private void sendSMSSingleContact() {
+        /* Todo: Implement sendSMSSingleContact */
+        System.out.println("sendSMSSingleContact()");
+    }
+
+    private void sendSMSMultipleContacts() {
+        /* Todo: Implement sendSMSMultipleContacts */
+        System.out.println("sendSMSMultipleContact()");
     }
 
 }

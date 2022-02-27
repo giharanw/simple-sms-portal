@@ -42,7 +42,7 @@
             <Font name="Ubuntu Medium" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtContact" layoutX="16.0" layoutY="352.0" prefHeight="26.0" prefWidth="194.0" promptText="071-1234567" />
+      <TextField fx:id="txtContact" layoutX="16.0" layoutY="352.0" prefHeight="26.0" prefWidth="194.0" promptText="Eg: 0771234567" />
       <Button fx:id="btnAdd" defaultButton="true" layoutX="24.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="33.0" prefWidth="85.0" style="-fx-background-radius: 13; -fx-background-color: #192a56;" text="Add" textFill="WHITE">
          <font>
             <Font name="Ubuntu Condensed" size="18.0" />
