@@ -36,7 +36,10 @@ public class PortalFormController {
         btnAdd.setDisable(true);
         btnRemove.setDisable(true);
         btnSend.setDisable(true);
+        btnClear.setDisable(true);
+        btnRemoveAll.setDisable(true);
         txtMessage.textProperty().addListener((observable, oldValue, newValue) -> {
+            btnClear.setDisable(newValue.isEmpty());
             int charCount = newValue.split("").length;
             lblCharacters.setText((500-charCount)+" characters remaining (Max. 500)");
             lblCharacters.setTextFill(Color.WHITE);
@@ -53,10 +56,8 @@ public class PortalFormController {
             btnRemove.setDisable(newValue==null);
         });
         lstContacts.getItems().addListener((ListChangeListener<? super String>) observable -> {
-            btnSend.setDisable(true);
-            if (!lstContacts.getItems().isEmpty()){
-                btnSend.setDisable(false);
-            }
+            btnSend.setDisable(lstContacts.getItems().isEmpty());
+            btnRemoveAll.setDisable(lstContacts.getItems().isEmpty());
         });
     }
     
@@ -151,11 +152,20 @@ public class PortalFormController {
     }
 
     public void btnClearAllOnAction(ActionEvent actionEvent) {
+        if (sendAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Are you sure?","Press OK to clear all.").get()==ButtonType.OK){
+            btnClear.fire();
+            btnRemoveAll.fire();
+            txtContact.clear();
+        }
     }
 
     public void btnClearOnAction(ActionEvent actionEvent) {
+        txtMessage.clear();
+        txtMessage.requestFocus();
     }
 
     public void btnRemoveAllOnAction(ActionEvent actionEvent) {
+        lstContacts.getItems().remove(0,lstContacts.getItems().size());
+        txtContact.requestFocus();
     }
 }
