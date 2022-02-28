@@ -129,7 +129,6 @@ public class PortalFormController {
             sb.append("\n\t]\n}");
             data=sb.toString();
         }
-        System.out.println(data);
         return data;
     }
 
