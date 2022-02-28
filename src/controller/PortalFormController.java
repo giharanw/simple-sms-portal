@@ -8,8 +8,14 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.Optional;
 
 public class PortalFormController {
@@ -70,40 +76,76 @@ public class PortalFormController {
     }
     
     public void btnSendOnAction(ActionEvent event) throws IOException {
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmation.setTitle("Confirmation");
-        confirmation.setHeaderText("Your message and contact(s) are as follows: ");
-        confirmation.setContentText(new String("Message: "+txtMessage.getText()+"\nContact(s): "+lstContacts.getItems().toString()));
-        confirmation.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        Optional<ButtonType> result = confirmation.showAndWait();
-        if (result.get()==ButtonType.OK){
-            URL url = new URL("https://api.smshub.lk/api/v2/send/single");
+        if (sendAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Your message and contact(s) are as follows: ","Message: "+txtMessage.getText()+"\nContact(s): "+lstContacts.getItems().toString()).get()==ButtonType.OK){
+            int size= lstContacts.getItems().size();
+            URL url = new URL(setURL(size));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-type","application/json");
-            connection.setRequestProperty("","application/json");
-
-            String apiToken = "Enter API Token Here";
-
+            connection.setRequestProperty("Content-Type","application/json");
+            String apiToken = "API Token Here";
             connection.setRequestProperty("Authorization", apiToken);
 
-            if (lstContacts.getItems().size()==1){
-                sendSMSSingleContact();
+            try {
+                connection.setDoOutput(true);
+                OutputStream os = connection.getOutputStream();
+                os.write(setData(size).getBytes());
+                os.close();
+
+                InputStream is = connection.getInputStream();
+                StringBuilder response = new StringBuilder();
+
+                ReadableByteChannel byteChannel = Channels.newChannel(is);
+                while (true) {
+                    ByteBuffer buffer = ByteBuffer.allocate(1024);
+                    int read = byteChannel.read(buffer);
+                    if (read!=-1) response.append(buffer);
+                    else break;
+                }
+                byteChannel.close();
+                sendAlert(Alert.AlertType.INFORMATION,"Information","Response code: "+connection.getResponseCode(),"Message sent successfully");
             }
-            else if (lstContacts.getItems().size()>1){
-                sendSMSMultipleContacts();
+            catch (Throwable e){
+                if (e instanceof UnknownHostException){
+                    sendAlert(Alert.AlertType.ERROR,"Error", "Network error", e.toString());
+                } else {
+                    sendAlert(Alert.AlertType.ERROR,"Error", "Error code: "+connection.getResponseCode(), connection.getResponseMessage());
+                }
             }
         }
     }
 
-    private void sendSMSSingleContact() {
-        /* Todo: Implement sendSMSSingleContact */
-        System.out.println("sendSMSSingleContact()");
+    private String setData(int size) {
+        String data = null;
+        if (size==1){
+            data = "{\n\t\"message\":\""+txtMessage.getText()+"\",\n\t\"phoneNumber\":\""+lstContacts.getItems().get(0)+"\"\n}";
+        }
+        else if (size>1){
+            StringBuilder sb = new StringBuilder("{\n\t\"messageArray\": [");
+            for (String contactsItem : lstContacts.getItems()) {
+                sb.append("\n\t\t{\n\t\t\t\"PhoneNumber\": \""+contactsItem+"\"," +
+                        "\n\t\t\t\"SmsMessage\": \""+txtMessage.getText()+"\"\n\t\t},");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            sb.append("\n\t]\n}");
+            data=sb.toString();
+        }
+        System.out.println(data);
+        return data;
     }
 
-    private void sendSMSMultipleContacts() {
-        /* Todo: Implement sendSMSMultipleContacts */
-        System.out.println("sendSMSMultipleContact()");
+    private Optional<ButtonType> sendAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
+    }
+
+    private String setURL(int size) {
+        String urlSpec=size==1?"https://api.smshub.lk/api/v2/send/single":size>1?"https://api.smshub.lk/api/v2/send/bulk":"";
+        return urlSpec;
     }
 
 }
