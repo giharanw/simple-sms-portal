@@ -28,6 +28,9 @@ public class PortalFormController {
     public TextField txtContact;
     public Button btnAdd;
     public Button btnRemove;
+    public Button btnClearAll;
+    public Button btnClear;
+    public Button btnRemoveAll;
 
     public void initialize(){
         btnAdd.setDisable(true);
@@ -147,4 +150,12 @@ public class PortalFormController {
         return urlSpec;
     }
 
+    public void btnClearAllOnAction(ActionEvent actionEvent) {
+    }
+
+    public void btnClearOnAction(ActionEvent actionEvent) {
+    }
+
+    public void btnRemoveAllOnAction(ActionEvent actionEvent) {
+    }
 }

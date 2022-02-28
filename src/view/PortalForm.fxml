@@ -8,47 +8,62 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="657.0" prefWidth="447.0" style="-fx-background-color: #636e72;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PortalFormController">
+<AnchorPane fx:id="root" prefHeight="655.0" prefWidth="447.0" style="-fx-background-color: #636e72;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PortalFormController">
 <children>
-    <TextArea fx:id="txtMessage" focusTraversable="false" layoutX="15.0" layoutY="107.0" prefHeight="156.0" prefWidth="416.0" promptText="Enter Your Message Here" style="-fx-background-color: #b2bec3;" />
-    <Label layoutX="133.0" layoutY="14.0" text="My SMS Portal" textFill="WHITE">
+    <TextArea fx:id="txtMessage" focusTraversable="false" layoutX="15.0" layoutY="96.0" prefHeight="156.0" prefWidth="416.0" promptText="Enter Your Message Here" style="-fx-background-color: #b2bec3;" />
+    <Label layoutX="133.0" layoutY="9.0" text="My SMS Portal" textFill="WHITE">
         <font>
             <Font name="Ubuntu Condensed" size="34.0" />
         </font>
     </Label>
-    <Button fx:id="btnSend" defaultButton="true" layoutX="154.0" layoutY="567.0" mnemonicParsing="false" onAction="#btnSendOnAction" prefHeight="49.0" prefWidth="138.0" style="-fx-background-radius: 20; -fx-background-color: #2d3436;" text="Send SMS" textFill="WHITE">
+    <Button fx:id="btnSend" defaultButton="true" layoutX="154.0" layoutY="580.0" mnemonicParsing="false" onAction="#btnSendOnAction" prefHeight="49.0" prefWidth="138.0" style="-fx-background-radius: 20; -fx-background-color: #2d3436;" text="Send SMS" textFill="WHITE">
         <font>
             <Font name="Ubuntu Condensed" size="27.0" />
         </font>
     </Button>
-    <Label layoutX="94.0" layoutY="630.0" text="Developed by Gihara Wickramatunge" textFill="WHITE">
+    <Label layoutX="94.0" layoutY="635.0" text="Developed by Gihara Wickramatunge" textFill="WHITE">
         <font>
             <Font name="Ubuntu Medium" size="15.0" />
         </font>
     </Label>
-      <Label layoutX="15.0" layoutY="83.0" text="Message:" textFill="WHITE">
+      <Label layoutX="15.0" layoutY="72.0" text="Message:" textFill="WHITE">
          <font>
             <Font name="Ubuntu Medium" size="15.0" />
          </font>
       </Label>
-      <ListView fx:id="lstContacts" layoutX="223.0" layoutY="352.0" prefHeight="185.0" prefWidth="200.0" />
-      <Label layoutX="16.0" layoutY="329.0" text="Contact Number:" textFill="WHITE">
+      <ListView fx:id="lstContacts" layoutX="223.0" layoutY="330.0" prefHeight="185.0" prefWidth="208.0" />
+      <Label layoutX="17.0" layoutY="307.0" text="Contact Number:" textFill="WHITE">
          <font>
             <Font name="Ubuntu Medium" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblCharacters" layoutX="175.0" layoutY="270.0" prefHeight="17.0" prefWidth="258.0" text="500 characters remaining (Max. 500)" textFill="WHITE">
+      <Label fx:id="lblCharacters" layoutX="14.0" layoutY="259.0" prefHeight="17.0" prefWidth="258.0" text="500 characters remaining (Max. 500)" textFill="WHITE">
          <font>
             <Font name="Ubuntu Medium" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtContact" layoutX="16.0" layoutY="352.0" prefHeight="26.0" prefWidth="194.0" promptText="Eg: 0771234567" />
-      <Button fx:id="btnAdd" defaultButton="true" layoutX="24.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="33.0" prefWidth="85.0" style="-fx-background-radius: 13; -fx-background-color: #192a56;" text="Add" textFill="WHITE">
+      <TextField fx:id="txtContact" layoutX="16.0" layoutY="330.0" prefHeight="26.0" prefWidth="194.0" promptText="Eg: 0771234567" />
+      <Button fx:id="btnAdd" defaultButton="true" layoutX="24.0" layoutY="371.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="33.0" prefWidth="85.0" style="-fx-background-radius: 13; -fx-background-color: #192a56;" text="Add" textFill="WHITE">
          <font>
             <Font name="Ubuntu Condensed" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnRemove" defaultButton="true" layoutX="117.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnRemoveOnAction" prefHeight="33.0" prefWidth="85.0" style="-fx-background-radius: 13; -fx-background-color: #192a56;" text="Remove" textFill="WHITE">
+      <Button fx:id="btnRemove" defaultButton="true" layoutX="117.0" layoutY="371.0" mnemonicParsing="false" onAction="#btnRemoveOnAction" prefHeight="33.0" prefWidth="85.0" style="-fx-background-radius: 13; -fx-background-color: #192a56;" text="Remove" textFill="WHITE">
+         <font>
+            <Font name="Ubuntu Condensed" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnClearAll" defaultButton="true" layoutX="154.0" layoutY="537.0" mnemonicParsing="false" onAction="#btnClearAllOnAction" prefHeight="33.0" prefWidth="138.0" style="-fx-background-radius: 13; -fx-background-color: white;" text="Clear All" textFill="#192a56">
+         <font>
+            <Font name="Ubuntu Condensed" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnClear" defaultButton="true" layoutX="295.0" layoutY="260.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="33.0" prefWidth="138.0" style="-fx-background-radius: 13; -fx-background-color: #192a56;" text="Clear" textFill="WHITE">
+         <font>
+            <Font name="Ubuntu Condensed" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRemoveAll" defaultButton="true" layoutX="22.0" layoutY="413.0" mnemonicParsing="false" onAction="#btnRemoveAllOnAction" prefHeight="33.0" prefWidth="181.0" style="-fx-background-radius: 13; -fx-background-color: #192a56;" text="Remove All" textFill="WHITE">
          <font>
             <Font name="Ubuntu Condensed" size="18.0" />
          </font>
