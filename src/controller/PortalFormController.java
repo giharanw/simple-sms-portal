@@ -86,7 +86,7 @@ public class PortalFormController {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type","application/json");
-            String apiToken = "API Token Here";
+            String apiToken = "";
             connection.setRequestProperty("Authorization", apiToken);
 
             try {
@@ -109,6 +109,7 @@ public class PortalFormController {
                 sendAlert(Alert.AlertType.INFORMATION,"Information","Response code: "+connection.getResponseCode(),"Message sent successfully");
             }
             catch (Throwable e){
+                e.printStackTrace();
                 if (e instanceof UnknownHostException){
                     sendAlert(Alert.AlertType.ERROR,"Error", "Network error", e.toString());
                 } else {

@@ -11,9 +11,9 @@
 <AnchorPane fx:id="root" prefHeight="655.0" prefWidth="447.0" style="-fx-background-color: #636e72;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PortalFormController">
 <children>
     <TextArea fx:id="txtMessage" focusTraversable="false" layoutX="15.0" layoutY="96.0" prefHeight="156.0" prefWidth="416.0" promptText="Enter Your Message Here" style="-fx-background-color: #b2bec3;" />
-    <Label layoutX="133.0" layoutY="9.0" text="My SMS Portal" textFill="WHITE">
+    <Label layoutX="77.0" layoutY="13.0" text="My SMS Portal" textFill="WHITE">
         <font>
-            <Font name="Ubuntu Condensed" size="34.0" />
+            <Font name="Ubuntu Bold" size="42.0" />
         </font>
     </Label>
     <Button fx:id="btnSend" defaultButton="true" layoutX="154.0" layoutY="580.0" mnemonicParsing="false" onAction="#btnSendOnAction" prefHeight="49.0" prefWidth="138.0" style="-fx-background-radius: 20; -fx-background-color: #2d3436;" text="Send SMS" textFill="WHITE">
@@ -21,7 +21,7 @@
             <Font name="Ubuntu Condensed" size="27.0" />
         </font>
     </Button>
-    <Label layoutX="94.0" layoutY="635.0" text="Developed by Gihara Wickramatunge" textFill="WHITE">
+    <Label layoutX="94.0" layoutY="634.0" text="Developed by Gihara Wickramatunge" textFill="WHITE">
         <font>
             <Font name="Ubuntu Medium" size="15.0" />
         </font>
